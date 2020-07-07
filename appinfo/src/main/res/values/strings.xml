@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AppInfo</string>
+    <string name="search">搜索</string>
+    <string name="sort_name">按名字排序</string>
+    <string name="sort_pkg_name">按包名排序</string>
+    <string name="sort_signature">按签名排序</string>
+    <string name="title_list">App列表</string>
+    <string name="title_detail">App详情</string>
+
+</resources>

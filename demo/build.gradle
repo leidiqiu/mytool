@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+
+    defaultConfig {
+        applicationId "com.ldq.tool.demo"
+        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('keystore/release.keystore')
+            storePassword 'keypass0'
+            keyAlias = 'key'
+            keyPassword 'password0'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(':appinfo')
+
+    implementation("com.android.support:support-v4:${BUILD_TOOLS_VERSION}")
+    implementation("com.android.support:appcompat-v7:${BUILD_TOOLS_VERSION}")
+}
