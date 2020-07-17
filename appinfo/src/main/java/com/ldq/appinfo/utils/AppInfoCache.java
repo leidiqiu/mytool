@@ -39,6 +39,7 @@ public class AppInfoCache {
 
     private void init(Context context) {
         if (appInfoList == null || appInfoList.size() == 0) {
+            long start = System.currentTimeMillis();
             PackageManager packageManager = context.getPackageManager();
             List<ApplicationInfo> list = packageManager.getInstalledApplications(PackageManager.SIGNATURE_MATCH);
             appInfoList = new ArrayList<>();
@@ -48,11 +49,15 @@ public class AppInfoCache {
                     String label = (String) packageManager.getApplicationLabel(applicationInfo);
                     String signature = getSignature(context, applicationInfo.packageName);
                     AppInfo appInfo = new AppInfo(icon, label, applicationInfo.packageName, signature);
+
+                    AppSizeUtils.setApkSize(context, applicationInfo.packageName, appInfo);
+
                     appInfoList.add(appInfo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+            System.out.println(">>> time spent: " + (System.currentTimeMillis() - start));
         }
     }
 

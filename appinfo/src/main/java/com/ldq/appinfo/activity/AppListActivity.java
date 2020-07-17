@@ -52,7 +52,7 @@ public class AppListActivity extends AppCompatActivity implements OnItemClickLis
         Intent intent = new Intent(AppListActivity.this, AppDetailActivity.class);
         AppListAdapter adapter = (AppListAdapter) parent.getAdapter();
         AppInfo appInfo = (AppInfo) adapter.getItem(position);
-        String packageName = appInfo.getPackageName().toString();
+        String packageName = appInfo.packageName.toString();
         intent.putExtra(ConstKey.KEY_PACKAGE_NAME, packageName);
         startActivity(intent);
     }
@@ -60,7 +60,7 @@ public class AppListActivity extends AppCompatActivity implements OnItemClickLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_list, menu);
+        inflater.inflate(R.menu.menu_list_app_list, menu);
 
         SearchView searchView = ((SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search)));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -98,14 +98,20 @@ public class AppListActivity extends AppCompatActivity implements OnItemClickLis
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.appinfo_name) {
+        } else if (item.getItemId() == R.id.sort_name) {
             ((AppListAdapter) mListView.getAdapter()).sort(AppListAdapter.SortKey.NAME);
             return true;
-        } else if (item.getItemId() == R.id.sort_pkgname) {
+        } else if (item.getItemId() == R.id.sort_pkg_name) {
             ((AppListAdapter) mListView.getAdapter()).sort(AppListAdapter.SortKey.PKG_NAME);
             return true;
         } else if (item.getItemId() == R.id.sort_signature) {
             ((AppListAdapter) mListView.getAdapter()).sort(AppListAdapter.SortKey.SIGNATURE);
+            return true;
+        } else if (item.getItemId() == R.id.sort_app_size) {
+            ((AppListAdapter) mListView.getAdapter()).sort(AppListAdapter.SortKey.APP_SIZE);
+            return true;
+        } else if (item.getItemId() == R.id.sort_app_size_desc) {
+            ((AppListAdapter) mListView.getAdapter()).sort(AppListAdapter.SortKey.APP_SIZE_DESC);
             return true;
         } else {
             return super.onOptionsItemSelected(item);

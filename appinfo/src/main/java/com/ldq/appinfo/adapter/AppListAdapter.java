@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import com.ldq.appinfo.R;
 import com.ldq.appinfo.bean.AppInfo;
+import com.ldq.appinfo.utils.AppSizeUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,8 +57,9 @@ public class AppListAdapter extends BaseAdapter {
             holder = new Holder();
             holder.imageView = convertView.findViewById(R.id.appinfo_image);
             holder.textViewName = convertView.findViewById(R.id.appinfo_name);
-            holder.textViewPkgName = convertView.findViewById(R.id.appinfo_pkgname);
+            holder.textViewPkgName = convertView.findViewById(R.id.appinfo_pkg_name);
             holder.textViewSignature = convertView.findViewById(R.id.appinfo_signature);
+            holder.textViewSize = convertView.findViewById(R.id.appinfo_size);
             convertView.setTag(holder);
         }
 
@@ -70,13 +71,19 @@ public class AppListAdapter extends BaseAdapter {
     public void sort(SortKey sortKey) {
         switch (sortKey) {
             case NAME:
-                Collections.sort(mList, (o1, o2) -> o1.getName().toString().compareTo(o2.getName().toString()));
+                Collections.sort(mList, (o1, o2) -> o1.name.toString().compareTo(o2.name.toString()));
                 break;
             case PKG_NAME:
-                Collections.sort(mList, (o1, o2) -> o1.getPackageName().toString().compareTo(o2.getPackageName().toString()));
+                Collections.sort(mList, (o1, o2) -> o1.packageName.toString().compareTo(o2.packageName.toString()));
                 break;
             case SIGNATURE:
-                Collections.sort(mList, (o1, o2) -> o1.getSignature().toString().compareTo(o2.getSignature().toString()));
+                Collections.sort(mList, (o1, o2) -> o1.signature.toString().compareTo(o2.signature.toString()));
+                break;
+            case APP_SIZE:
+                Collections.sort(mList, (o1, o2) -> (int) (o1.appSize - o2.appSize));
+                break;
+            case APP_SIZE_DESC:
+                Collections.sort(mList, (o1, o2) -> (int) (o2.appSize - o1.appSize));
                 break;
             default:
                 break;
@@ -87,14 +94,14 @@ public class AppListAdapter extends BaseAdapter {
 
     public void filter(String keyword) {
         mList = new ArrayList();
-        if (!TextUtils.isEmpty(keyword)) {
+        if (keyword != null) {
             for (AppInfo appInfo : mListBackup) {
-                appInfo.setName(spannable(appInfo.getName(), keyword));
-                appInfo.setPackageName(spannable(appInfo.getPackageName(), keyword));
-                appInfo.setSignature(spannable(appInfo.getSignature(), keyword));
-                if (appInfo.getName().toString().contains(keyword)
-                        || appInfo.getPackageName().toString().contains(keyword)
-                        || appInfo.getSignature().toString().contains(keyword)) {
+                appInfo.name = spannable(appInfo.name, keyword);
+                appInfo.packageName = spannable(appInfo.packageName, keyword);
+                appInfo.signature = spannable(appInfo.signature, keyword);
+                if (appInfo.name.toString().contains(keyword)
+                        || appInfo.packageName.toString().contains(keyword)
+                        || appInfo.signature.toString().contains(keyword)) {
                     mList.add(appInfo);
                 }
             }
@@ -121,15 +128,24 @@ public class AppListAdapter extends BaseAdapter {
     private void bindView(View view, int position) {
         Holder holder = (Holder) view.getTag();
         AppInfo appInfo = (AppInfo) getItem(position);
-        holder.imageView.setImageDrawable(appInfo.getIcon());
-        holder.textViewName.setText(appInfo.getName());
+        holder.imageView.setImageDrawable(appInfo.icon);
+        holder.textViewName.setText(appInfo.name);
 
-        holder.textViewPkgName.setText(new SpannableStringBuilder("包名:").append(appInfo.getPackageName()));
-        holder.textViewSignature.setText(new SpannableStringBuilder("签名:").append(appInfo.getSignature()));
+        holder.textViewPkgName.setText(new SpannableStringBuilder("包名:").append(appInfo.packageName));
+        holder.textViewSignature.setText(new SpannableStringBuilder("签名:").append(appInfo.signature));
+
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("应用:");
+        stringBuffer.append(AppSizeUtils.formatShortFileSize(mContext, appInfo.appSize));
+        stringBuffer.append(", 数据:");
+        stringBuffer.append(AppSizeUtils.formatShortFileSize(mContext, appInfo.dataSize));
+        stringBuffer.append(", 缓存:");
+        stringBuffer.append(AppSizeUtils.formatShortFileSize(mContext, appInfo.cacheSize));
+        holder.textViewSize.setText(stringBuffer.toString());
     }
 
     public enum SortKey {
-        NAME, PKG_NAME, SIGNATURE
+        NAME, PKG_NAME, SIGNATURE, APP_SIZE, APP_SIZE_DESC
     }
 
     private class Holder {
@@ -137,5 +153,6 @@ public class AppListAdapter extends BaseAdapter {
         TextView textViewName;
         TextView textViewPkgName;
         TextView textViewSignature;
+        TextView textViewSize;
     }
 }

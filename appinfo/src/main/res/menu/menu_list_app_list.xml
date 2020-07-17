@@ -12,10 +12,16 @@
         android:id="@+id/sort_name"
         android:title="@string/sort_name" />
     <item
-        android:id="@+id/sort_pkgname"
+        android:id="@+id/sort_pkg_name"
         android:title="@string/sort_pkg_name" />
     <item
         android:id="@+id/sort_signature"
         android:title="@string/sort_signature" />
+    <item
+        android:id="@+id/sort_app_size"
+        android:title="@string/sort_app_size" />
+    <item
+        android:id="@+id/sort_app_size_desc"
+        android:title="@string/sort_app_size_desc" />
 
 </menu>

@@ -3,10 +3,14 @@
 
     <string name="app_name">AppInfo</string>
     <string name="search">搜索</string>
-    <string name="sort_name">按名字排序</string>
-    <string name="sort_pkg_name">按包名排序</string>
-    <string name="sort_signature">按签名排序</string>
+    <string name="sort_name">名字升序</string>
+    <string name="sort_pkg_name">包名升序</string>
+    <string name="sort_signature">签名升序</string>
+    <string name="sort_app_size">应用大小升序</string>
+    <string name="sort_app_size_desc">应用大小降序</string>
+
     <string name="title_list">App列表</string>
     <string name="title_detail">App详情</string>
+    <string name="title_sdcard">存储空间</string>
 
 </resources>

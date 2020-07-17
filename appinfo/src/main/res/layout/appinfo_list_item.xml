@@ -8,21 +8,20 @@
     <ImageView
         android:id="@+id/appinfo_image"
         android:layout_width="48dp"
-        android:layout_height="48dp" />
+        android:layout_height="48dp"
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/appinfo_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/appinfo_image"
         android:layout_marginLeft="6dp"
         android:layout_toRightOf="@id/appinfo_image"
-        android:text="应用名字"
-        android:textColor="#000000"
-        android:textSize="14sp" />
+        android:singleLine="true"
+        tools:text="名字" />
 
     <TextView
-        android:id="@+id/appinfo_pkgname"
+        android:id="@+id/appinfo_pkg_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/appinfo_name"
@@ -31,18 +30,32 @@
         android:singleLine="true"
         android:textColor="#666666"
         android:textSize="11sp"
-        tools:text="包名" />
+        tools:text="包名"> 
 
-    <TextView xmlns:tools="http://schemas.android.com/tools"
+    </TextView>
+
+    <TextView
         android:id="@+id/appinfo_signature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/appinfo_image"
+        android:layout_below="@id/appinfo_pkg_name"
         android:layout_marginLeft="6dp"
         android:layout_toRightOf="@id/appinfo_image"
         android:singleLine="true"
         android:textColor="#666666"
         android:textSize="11sp"
         tools:text="签名" />
+
+    <TextView
+        android:id="@+id/appinfo_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appinfo_signature"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/appinfo_image"
+        android:singleLine="true"
+        android:textColor="#666666"
+        android:textSize="11sp"
+        tools:text="大小" />
 
 </RelativeLayout>

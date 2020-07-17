@@ -12,7 +12,8 @@ import java.net.URL;
  */
 public class StockQuery {
 
-    private static final String QUERY_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&datatype=json&symbol=3690.HK&interval=5min&apikey=2ZYUUZANHGKU53N9";
+    //    private static final String QUERY_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&datatype=json&symbol='3690.HK'&apikey=2ZYUUZANHGKU53N9";
+    private static final String QUERY_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo";
 
     public static void main(String[] args) {
         try {
